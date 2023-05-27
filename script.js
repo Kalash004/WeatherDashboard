@@ -1,4 +1,4 @@
-const apiKey = '83037af74791252875f34544e141853a'; // Replace with your OpenWeatherMap API key
+const apiKey = '83037af74791252875f34544e141853a'; 
 const city = 'London'; // Replace with the desired location
 
 const weatherElement = document.getElementById('weather');
