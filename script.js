@@ -64,12 +64,20 @@ function fetchWeatherData() {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
         .then(response => response.json())
         .then(data => {
+            if (data.cod == 401) {
+                console.log(`An error with fetching data from an api, most likely you didnt spell the name of the city right way : ${city}`)
+            }
             const temperature = data.main.temp;
             const condition = data.weather[0].description;
-            weatherElement.innerHTML = `<p>Location: ${city}</p><p>Temperature: ${temperature}°C</p><p>Condition: ${condition}</p>`;
+            const countryCode = data.sys.country;
+            const iconCode = data.weather[0].icon;
+            weatherElement.innerHTML = `<p>Location: ${city}</p><p>County: ${countryCode}</p><p>Temperature: ${temperature}°C</p><p>Condition: ${condition}</p><img src=${obtainIconFromWeather(iconCode)}></img>`;
         })
         .catch(error => console.log(error));
 };
 
+function obtainIconFromWeather(iconId) {
+    return `https://openweathermap.org/img/wn/${iconId}.png`;
+}
 // Call the function every 60 seconds
 setInterval(fetchWeatherDataInterval, 60000); // 60 seconds interval
