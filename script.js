@@ -92,7 +92,7 @@ function fetchWeatherData() {
             const condition = data.weather[0].description;
             const countryCode = data.sys.country;
             const iconCode = data.weather[0].icon;
-            switch (units) {
+            switch (units.toLowerCase()) {
                 case ('metric'): temperature = temperature + '°C';
                     break;
                 case ('imperial'): temperature = temperature + '°F';
