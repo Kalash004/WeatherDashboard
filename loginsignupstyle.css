@@ -14,3 +14,7 @@ body {
 .card {
     width: 400px;
 }
+
+#logo {
+    width: 75px;
+}

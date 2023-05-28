@@ -4,10 +4,6 @@ body {
     min-height: 100vh;
 }
 
-main {
-    flex: 1;
-}
-
 .content {
     flex: 1;
     display: flex;
@@ -23,22 +19,11 @@ main {
 
 .card-body {
     padding: 40px;
-    text-align: center;
 }
 
-.card-title {
-    font-size: 24px;
-}
-
-.weather-info {
-    font-size: 18px;
+.form-group {
     margin-bottom: 20px;
 }
-
-.weather-info strong {
-    font-weight: bold;
-}
-
 #logo {
     width: 75px;
 }

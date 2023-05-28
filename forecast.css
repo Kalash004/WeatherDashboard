@@ -11,3 +11,7 @@ main {
 .card img {
   width: 50px;
 }
+
+#logo {
+  width: 75px;
+}
