@@ -70,8 +70,11 @@ function createForecastCard(day, forecastContainer) {
         var iconElement = $('<img>').attr('src', iconUrl);
         var firstLetter = description.charAt(0);
         var tempString = firstLetter.toUpperCase() + description.slice(1);
+        var tempTemperatureSignString;
+        if (units.toLowerCase == 'metric') tempTemperatureSignString = '°C'
+        else tempTemperatureSignString = '°F'; 
         var descriptionElement = $('<p>').text(`Weather: ${tempString}`).addClass('card-text');
-        var temperatureElement = $('<p>').text(`Temperature: ${temperature}`).addClass('card-text');
+        var temperatureElement = $('<p>').text(`Temperature: ${temperature}${tempTemperatureSignString}`).addClass('card-text');
         wrapper.append(timeElement, iconElement, descriptionElement, temperatureElement)
         forecastCardBody.append(wrapper);
         forecastDay.append(forecastCardBody);
@@ -107,4 +110,12 @@ function getUnits() {
     }
     units = 'metric';
     return units;
+}
+
+function dbHasCity() {
+    return false;
+}
+
+function dbHasUnits() {
+    return false;
 }
