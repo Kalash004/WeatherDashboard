@@ -71,7 +71,7 @@ function createForecastCard(day, forecastContainer) {
         var firstLetter = description.charAt(0);
         var tempString = firstLetter.toUpperCase() + description.slice(1);
         var tempTemperatureSignString;
-        if (units.toLowerCase == 'metric') tempTemperatureSignString = '°C'
+        if (units.toLowerCase() == "metric") tempTemperatureSignString = '°C';
         else tempTemperatureSignString = '°F'; 
         var descriptionElement = $('<p>').text(`Weather: ${tempString}`).addClass('card-text');
         var temperatureElement = $('<p>').text(`Temperature: ${temperature}${tempTemperatureSignString}`).addClass('card-text');
