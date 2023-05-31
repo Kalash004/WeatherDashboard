@@ -1,0 +1,26 @@
+// find which page you on
+// find navbar button, update its class
+
+
+$(document).ready(function () {
+    // get data from settings or local storage
+    setButtonPrimary();
+});
+
+function setButtonPrimary() {
+    var tempPageUrl = window.location.href
+    var indicator = getLastIndicator(tempPageUrl);
+    var navLink = document.querySelector(`[href="/${indicator}"]`);
+    if (navLink == null) {
+        console.log(`Navbar doesnt contain /${indicator} link`);
+        return;
+    }
+    var tempClasses = navLink.getAttribute("class");
+    navLink.setAttribute("class",`${tempClasses} active`);
+    console.log("test :)");
+}
+
+function getLastIndicator(url) {
+    var indicators = url.split('/');
+    return indicators[indicators.length - 1];
+}
