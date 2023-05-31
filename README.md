@@ -1,10 +1,4 @@
-Do repository zpracujte krátké README, které bude obsahovat stručné informace o projektu
-Název
-Funkce webové stránky
-Použité technologie
-Jak nainstalovat a spustit
-
-#WeatherDashboard
+# WeatherDashboard
 Weather Dashboard is a weather dashboard that displays weather data for multiple cities.
 ## Table of Contents
 * [Description](#description)

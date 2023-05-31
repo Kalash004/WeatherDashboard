@@ -17,7 +17,6 @@ function setButtonPrimary() {
     }
     var tempClasses = navLink.getAttribute("class");
     navLink.setAttribute("class",`${tempClasses} active`);
-    console.log("test :)");
 }
 
 function getLastIndicator(url) {
