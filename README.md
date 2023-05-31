@@ -4,6 +4,7 @@ Weather Dashboard is a weather dashboard that displays weather data for multiple
 * [Description](#description)
 * [Contributing](#contributing)
 * [Questions](#questions)
+* [Frameworks](#frameworks)
 ## Description
 This weather dashboard is a weather dashboard that displays weather data for multiple cities.
 It uses https://openweathermap.org/ Api to obtain data. You are able to change the city you want to be displayed in /settings
@@ -12,3 +13,7 @@ as-well as units in which you want the temperature to be displayed in.
 Anton Kalashnikov
 ## Questions
 For any questions ask me on kalashnikov004@gmail.com
+## Frameworks
+* Javascript
+* jQuery
+* Bootstrap
