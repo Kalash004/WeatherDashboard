@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="styles/forecast.css">
 </head>
 <?php include("SideLayouts/navbarLayout.php") ?>
-<main class="container mt-5">
+<main class="container-fluid mt-5">
   <h1>Forecast Page</h1>
   <div id="forecast-container"></div>
 </main>
@@ -20,5 +20,4 @@
   integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 <script src="scripts  /forecast.js"></script>
 </body>
-
 </html>

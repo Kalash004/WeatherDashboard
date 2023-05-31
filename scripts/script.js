@@ -17,12 +17,10 @@ function getUnits() {
     var tempUnits;
     if (localStorage.getItem('units') != null) {
         tempUnits = localStorage.getItem('units');
-        return;
     }
     if (dbHasUnits()) {
         // might do this function
         tempUnits = getCityFromDb();
-        return;
     }
     tempUnits = 'metric';
     return tempUnits;
@@ -72,11 +70,9 @@ function getCity() {
     var tempCity;
     if (localStorage.getItem('city') != null) {
         tempCity = localStorage.getItem('city');
-        return;
     }
     if (dbHasCity()) {
         tempCity = getCityFromDb();
-        return;
     }
     tempCity = 'Prague';
     return tempCity;
@@ -87,7 +83,7 @@ function fetchWeatherData() {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}&units=${units}`)
         .then(response => response.json())
         .then(data => {
-            if (data.cod == 401) {
+            if (data.cod == 800) {
                 console.log(`An error with fetching data from an api, most likely you didnt spell the name of the city right way : ${city}`)
             }
             let temperature = data.main.temp;

@@ -1,6 +1,6 @@
 const weatherApiKey = '83037af74791252875f34544e141853a';
-let city = '';
-let units = '';
+let city;
+let units;
 
 $(document).ready(function () {
     // var apiUrl = 'https://api.weatherapi.com/v1/forecast.json?key=YOUR_API_KEY&q=YOUR_LOCATION&days=5';
@@ -13,7 +13,7 @@ $(document).ready(function () {
 
 function fetchForecast(apiUrl) {
     $.get(apiUrl, function (data) {
-        var forecastContainer = $('#forecast-container').addClass("container");
+        var forecastContainer = $('#forecast-container').addClass("container-fluid");
         var cityText = $('<h2>').text(`${city}:`);
         forecastContainer.append(cityText);
         // Group data by date
@@ -54,25 +54,33 @@ function groupByDays(data) {
 }
 
 function createForecastCard(day, forecastContainer) {
-    var forecastDay = $('<div>').addClass('card row');
+    var forecastDay = $('<div>').addClass('card');
     var forecastDate = $('<h2>').text(day[0].dt_txt.split(" ")[0]);
-    var forecastCardBody = $('<div>').addClass('card-body d-flex flex-wrap')
+    var forecastCardBody = $('<div>').addClass('card-body d-flex row justify-content-evenly flex-wrap')
     forecastDay.append(forecastDate);
     day.forEach(element => {
-        var wrapper = $('<div>').addClass('col');
+        var wrapper = $('<div>').addClass('col flex-item min-width');
         var forecastTime = element;
         var iconUrl = `https://openweathermap.org/img/wn/${forecastTime.weather[0].icon}.png`;
         var description = forecastTime.weather[0].description;
         var temperature = forecastTime.main.temp;
         var date = forecastTime.dt_txt.split(" ")[1];
         // Create forecast card
-        var timeElement = $('<h3>').text(date);
+        var tempTime = date.split(":");
+        var timeElement = $('<h3>').text(`${tempTime[0]}:${tempTime[1]}`);
         var iconElement = $('<img>').attr('src', iconUrl);
         var firstLetter = description.charAt(0);
         var tempString = firstLetter.toUpperCase() + description.slice(1);
         var tempTemperatureSignString;
-        if (units.toLowerCase() == "metric") tempTemperatureSignString = '°C';
-        else tempTemperatureSignString = '°F'; 
+        if (units.toLowerCase() == "metric") {
+            tempTemperatureSignString = '°C';
+        }
+        else if (units.toLowerCase() == "imperial") {
+            tempTemperatureSignString = '°F';
+        } 
+        else {
+            tempTemperatureSignString = '°';
+        }
         var descriptionElement = $('<p>').text(`Weather: ${tempString}`).addClass('card-text');
         var temperatureElement = $('<p>').text(`Temperature: ${temperature}${tempTemperatureSignString}`).addClass('card-text');
         wrapper.append(timeElement, iconElement, descriptionElement, temperatureElement)
@@ -112,10 +120,11 @@ function getUnits() {
     return units;
 }
 
+// TODO:
 function dbHasCity() {
     return false;
 }
-
+// TODO:
 function dbHasUnits() {
     return false;
 }

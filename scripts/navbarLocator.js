@@ -1,9 +1,6 @@
 // find which page you on
 // find navbar button, update its class
-
-
 $(document).ready(function () {
-    // get data from settings or local storage
     setButtonPrimary();
 });
 

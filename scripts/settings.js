@@ -1,8 +1,8 @@
+var city;
+var units;
 
 $(document).ready(function () {
     // get data from settings or local storage
-    var city = '';
-    var units = '';
     city = getCity();
     units = getUnits();
     $("#cityInput").val(city);
@@ -56,5 +56,5 @@ document.getElementById("settingsForm").addEventListener("submit", function(even
     localStorage.setItem("city", city);
     localStorage.setItem("units", units);
     // Redirect to the home page
-    window.location.href = "index.html";
+    window.location.href = "/";
 });
