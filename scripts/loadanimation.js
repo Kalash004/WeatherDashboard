@@ -1,3 +1,9 @@
-$(document).ready(() => {
-    $(".content").hide().slideDown("slow");
-})
+
+$(".content").ready(() => {
+    $(".animation").ready(() => {
+        console.log($(".animation").html());
+        $(".animation").hide().fadeIn(700);
+    })
+}) 
+
+

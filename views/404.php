@@ -10,11 +10,14 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script></head>
   <body>
+  <?php include("SideLayouts/animation.php")?>
     <?php include("SideLayouts/navbarLayout.php") ?>
-    <div class="content-404 pt-5">
-        <h1 class="text-center">404</h1><h2 class="text-center">Page doesn't exist</h2><br>
-        <h3 class="text-center" style="color: gray">When i was making this website, only me and god knew what i was doing.</h3><br>
-        <h3 class="text-center" style="color: gray">... Now only god knows.</h3>
+    <div class="animation">
+        <div class="content-404 pt-5">
+            <h1 class="text-center">404</h1><h2 class="text-center">Page doesn't exist</h2><br>
+            <h3 class="text-center" style="color: gray">When i was making this website, only me and god knew what i was doing.</h3><br>
+            <h3 class="text-center" style="color: gray">... Now only god knows.</h3>
+        </div>
     </div>
     <?php include("SideLayouts/footer.php") ?>
     <style>
