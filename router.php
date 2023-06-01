@@ -1,5 +1,6 @@
 <?php
 // Router Library : https://github.com/phprouter/main
+// Neni moje
 function get($route, $path_to_include)
 {
 	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
