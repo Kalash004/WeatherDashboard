@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Sign Up</h5>
-                    <form action="process-singup.php" method="POST">
+                    <form action="process-signup" method="POST">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
@@ -33,7 +33,7 @@
                             <input type="password" class="form-control" id="password" placeholder="Enter password"
                                 name="password" required>
                         </div>
-                        <button type="submit" class="btn singup-btn btn-primary">Sign Up</button>
+                        <button class="btn singup-btn btn-primary">Sign Up</button>
                     </form>
                     <p class="mt-3">Already have an account? <a href="/login">Login</a></p>
                 </div>

@@ -1,3 +1,32 @@
+<?php 
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+       logUserIn();
+    }
+
+    function logUserIn() {
+        $mysqli = require 'services/DBC.php';
+        $selectSQL = "SELECT * FROM users WHERE email = ?";
+        try {
+            $user = $mysqli->prepare("select * from `User` where Username = ?");
+        } catch (Exception $e) {
+            die("SQL error: " . $mysqli->error);
+        }
+        
+        if (!checkCredentials($user)) {
+            die("User login or password is not right");
+        } 
+        // after login logic
+        echo ("Logged in");
+    }
+
+    function checkCredentials($user) {
+        if (!$user) {
+            die ("User doesnt exist");
+        }
+        return password_verify($_POST["password"],$user["hashedPassword"]) ;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +48,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Login</h5>
-                    <form>
+                    <form action="login" method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="email" placeholder="Enter email" required>
