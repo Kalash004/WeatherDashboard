@@ -21,13 +21,25 @@
                     <h5 class="card-title">Settings</h5>
                     <form id="settingsForm">
                         <div class="form-group">
-                            <label for="cityInput">City:</label>
+                            <label for="cityInput">
+                                <h6>City:</h6>
+                            </label>
                             <input type="text" class="form-control" id="cityInput" placeholder="Enter your city"
                                 required>
-                            <label for="unitsInput">Units:</label>
-                            <input type="text" class="form-control" name="unitsInput" id="unitsInput" required
-                                value="metric">
-                            <p>Possible units : standard, metric, imperial</p>
+                            <label for="unitsInput">
+                                <h6>Units:</h6>
+                            </label> <br>
+                            <div class="d-flex justify-content-evenly">
+                                <label for="unitsInput">Metric</label><br>
+                                <input style="min-height: 40px; max-width:40px" type="radio" class="form-control flex-item" name="unitsInput" id="unitsInputMetric"
+                                value="metric" required>
+                                <label for="unitsInput">Imperial</label><br>
+                                <input style="min-height: 40px; max-width:40px" type="radio" class="form-control flex-item" name="unitsInput" id="unitsInputImperial"
+                                value="imperial" required>
+                                <label for="unitsInput">Standard</label><br>
+                                <input style="min-height: 40px; max-width:40px" type="radio" class="form-control flex-item"
+                                name="unitsInput" id="unitsInputStandard" value="standard" required>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>

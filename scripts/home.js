@@ -25,7 +25,9 @@ function getUnits() {
         // might do this function
         tempUnits = getCityFromDb();
     }
-    tempUnits = 'metric';
+    if (tempUnits == null) {
+        tempUnits = 'metric';
+    }
     return tempUnits;
 }
 
@@ -66,7 +68,9 @@ function getCity() {
     if (dbHasCity()) {
         tempCity = getCityFromDb();
     }
-    tempCity = 'Prague';
+    if (tempUnits = null) {
+        tempCity = 'Prague';
+    }
     return tempCity;
 }
 
@@ -89,7 +93,9 @@ function onSuccessFetch(data) {
     switch (units.toLowerCase()) {
         case ('metric'): temperature = temperature + '°C';
             break;
-        case ('imperial'): temperature = temperature + '°F';
+        case ('imperial'): temperature = temperature + '°F'
+            break;
+        case ('standard'): temperature = temperature + '°'
             break;
     } 
     weatherElement.innerHTML = `<p>Location: ${city}</p><p>County: ${countryCode}</p><p>Temperature: ${temperature}</p><p>Condition: ${condition}</p><img src=${obtainIconFromWeather(iconCode)}></img>`;
