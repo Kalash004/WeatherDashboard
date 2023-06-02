@@ -6,22 +6,23 @@ $(document).ready(function () {
     city = getCity();
     units = getUnits();
     $("#cityInput").val(city);
-    $("#unitsInput").val(units);
+    var unitInput = document.querySelector(`[value='${units.toLowerCase()}']`);
+    unitInput.checked = true;
 });
 
 function getCity() {
     // Check if user has saved city in local storage -> yes : set city from local storage; no : try to obtain data from database -> yes : get city from the db no : set city prague automatically
-    var city;
+    var tempCity;
     if (localStorage.getItem('city') != null) {
-        city = localStorage.getItem('city');
-        return city; 
+        tempCity = localStorage.getItem('city');
     }
     if (dbHasCity()) {
-        city = getCityFromDb();
-        return city;
+        tempCity = getCityFromDb();
     }
-    city = 'Prague';
-    return city;
+    if (tempCity == null) {
+        tempCity = 'Prague';
+    }
+    return tempCity;
 }
 
 function dbHasCity() {
@@ -29,18 +30,17 @@ function dbHasCity() {
 }
 
 function getUnits() {
-    var units;
+    var tempUnits;
     if (localStorage.getItem('units') != null) {
-        units = localStorage.getItem('units');
-        return units;
+        tempUnits = localStorage.getItem('units');
     }
     if (dbHasUnits()) {
-        // might do this function
-        units = getCityFromDb();
-        return units;
+        tempUnits = getCityFromDb();
     }
-    units = 'metric';
-    return units;
+    if (tempUnits == null) {
+        tempUnits = 'metric';
+    } 
+    return tempUnits;
 }
 
 function dbHasUnits() {
@@ -51,10 +51,16 @@ document.getElementById("settingsForm").addEventListener("submit", function(even
     event.preventDefault(); // Prevent form submission
     // Get the city input value
     var city = document.getElementById("cityInput").value;
-    var units = document.getElementById("unitsInput").value;
+    let units = document.querySelectorAll("[name='unitsInput']");
+    var unit = "metric";
+    units.forEach(element => {
+        if (element.checked) {
+            unit = element.value;
+        }
+    });
     // Save the city into local storage
     localStorage.setItem("city", city);
-    localStorage.setItem("units", units);
+    localStorage.setItem("units", unit);
     // Redirect to the home page
     window.location.href = "/";
 });

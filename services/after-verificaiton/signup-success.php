@@ -14,6 +14,6 @@
   <p class="text-center">Redirecting</p>
 </body>
 <script>
-  setTimeout(() => {window.location.href="/"},5000);
+  setTimeout(() => {window.location.href="/"},2000);
 </script>
 </html>

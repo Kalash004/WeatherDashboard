@@ -116,32 +116,32 @@ function createForecastCard(dayData, forecastContainer) {
 
 function getCity() {
     // Check if user has saved city in local storage -> yes : set city from local storage; no : try to obtain data from database -> yes : get city from the db no : set city prague automatically
-    var city;
+    var tempCity;
     if (localStorage.getItem('city') != null) {
-        city = localStorage.getItem('city');
-        return city;
+        tempCity = localStorage.getItem('city');
     }
     if (dbHasCity()) {
-        city = getCityFromDb();
-        return city;
+        tempCity = getCityFromDb();
     }
-    city = 'Prague';
-    return city;
+    if (tempCity == null) {
+        tempCity = 'Prague';
+    }
+    return tempCity;
 }
 
 function getUnits() {
-    var units;
+    var tempUnits;
     if (localStorage.getItem('units') != null) {
-        units = localStorage.getItem('units');
-        return units;
+        tempUnits = localStorage.getItem('units');
     }
     if (dbHasUnits()) {
         // might do this function
-        units = getCityFromDb();
-        return units;
+        tempUnits = getCityFromDb();
     }
-    units = 'metric';
-    return units;
+    if (tempUnits == null) {
+        tempUnits = 'metric';
+    }
+    return tempUnits;
 }
 
 // TODO:

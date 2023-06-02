@@ -1,30 +1,71 @@
-<?php 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-       logUserIn();
-    }
+<?php
+$bIsInvalid = null;
+$triesLeft = 3;
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    logUserInWrapper();
+}
 
-    function logUserIn() {
-        $mysqli = require 'services/DBC.php';
-        $selectSQL = "SELECT * FROM users WHERE email = ?";
-        try {
-            $user = $mysqli->prepare("select * from `User` where Username = ?");
-        } catch (Exception $e) {
-            die("SQL error: " . $mysqli->error);
-        }
-        
-        if (!checkCredentials($user)) {
-            die("User login or password is not right");
-        } 
-        // after login logic
-        echo ("Logged in");
+function logUserInWrapper()
+{
+    global $bIsInvalid;
+    global $triesLeft;
+    if (logUserIn()) {
+        return true;
     }
+    $bIsInvalid = true;
+    // write into file logic here
+    writeToFile();
+    return false;
+}
 
-    function checkCredentials($user) {
-        if (!$user) {
-            die ("User doesnt exist");
-        }
-        return password_verify($_POST["password"],$user["hashedPassword"]) ;
+function writeToFile()
+{
+    $file = fopen($_SERVER["DOCUMENT_ROOT"] . "/data/login-logs.txt", "a+");
+    $ip = null;
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
     }
+    fwrite($file, "Date: " . date('d-m-y h:i:s') . " IP: " . $ip . " tried connecting to: " . $_POST["email"] . "\n");
+    fclose($file);
+}
+
+function logUserIn()
+{
+    $mysqli = require 'services/DBC.php';
+    $selectSQL = "SELECT * FROM users WHERE email = ?";
+    $statement;
+    try {
+        $statement = $mysqli->prepare("SELECT * FROM users WHERE email = ?");
+    } catch (Exception $e) {
+        die("SQL error: " . $mysqli->error);
+    }
+    $statement->bind_param("s", $_POST["email"]);
+    if (!$statement->execute()) {
+        die($statement->error);
+    }
+    $user = $statement->get_result()->fetch_assoc();
+    if (!checkCredentials($user)) {
+        return false;
+    }
+    // after login logic
+    session_start();
+    $_SESSION["user_id"] = $user["id"];
+    $_SESSION["user_name"] = $user["userName"];
+    header("Location: /");
+    return true;
+}
+
+function checkCredentials($user)
+{
+    if (!$user) {
+        return false;
+    }
+    return password_verify($_POST["password"], $user["hashedPassword"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,14 +89,20 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Login</h5>
+                    <?php global $bIsInvalid;
+                    if ($bIsInvalid === true): ?>
+                        <h6 class="text-danger">Invalid credentials</h6>
+                    <?php endif; ?>
                     <form action="login" method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Enter email"
+                                required value="<?= htmlspecialchars($_POST["email"] ?? "") ?>">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                            <input name="password" type="password" class="form-control" id="password"
+                                placeholder="Enter password" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>
@@ -71,4 +118,5 @@
 </body>
 
 </html>
+
 </html>
