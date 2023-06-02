@@ -1,27 +1,40 @@
 <?php 
+    $bIsInvalid = null;
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-       logUserIn();
+        if(!logUserIn()) {
+            $bIsInvalid = true;
+        }
+
     }
 
     function logUserIn() {
         $mysqli = require 'services/DBC.php';
         $selectSQL = "SELECT * FROM users WHERE email = ?";
+        $statement;
         try {
-            $user = $mysqli->prepare("select * from `User` where Username = ?");
+            $statement = $mysqli->prepare("SELECT * FROM users WHERE email = ?");
         } catch (Exception $e) {
             die("SQL error: " . $mysqli->error);
         }
-        
+        $statement->bind_param("s",$_POST["email"]);
+        if(!$statement->execute()) {
+            die($statement->error);
+        }
+        $user = $statement->get_result()->fetch_assoc();
         if (!checkCredentials($user)) {
-            die("User login or password is not right");
-        } 
+            return false;
+        }
         // after login logic
-        echo ("Logged in");
+        session_start();
+        $_SESSION["user_id"] = $user["id"];
+        $_SESSION["user_name"] = $user["userName"];
+        header("Location: /");
+        return true;
     }
 
     function checkCredentials($user) {
         if (!$user) {
-            die ("User doesnt exist");
+            return false;            
         }
         return password_verify($_POST["password"],$user["hashedPassword"]) ;
     }
@@ -48,14 +61,17 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Login</h5>
+                    <?php if ($bIsInvalid === true): ?>
+                        <h6 class="text-danger">Invalid credentials</h6>
+                    <?php endif;?>
                     <form action="login" method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" required value="<?= htmlspecialchars($_POST["email"] ?? "")?>" >
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                            <input name="password" type="password" class="form-control" id="password" placeholder="Enter password" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>
