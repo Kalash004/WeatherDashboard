@@ -8,6 +8,7 @@ $(document).ready(function () {
     $("#cityInput").val(city);
     var unitInput = document.querySelector(`[value='${units.toLowerCase()}']`);
     unitInput.checked = true;
+    unitInput.className = unitInput.className + " bg-dark";
 });
 
 function getCity() {
